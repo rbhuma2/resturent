@@ -1,0 +1,12 @@
+/src/main/webapp/WEB-INF/classes/
+
+build/
+/build
+.gradle
+/.gradle
+/.settings
+.classpath
+.project
+/gradle.properties
+/gradle.properties.macosx
+/bin

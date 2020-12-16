@@ -1,0 +1,77 @@
+{
+	"Configuration": {
+	    "Appenders": {
+			"Console": {
+				"PatternLayout": {
+					"pattern": "%d{yyyy-MM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n"
+				},
+				"name": "Console",
+				"target": "SYSTEM_OUT"
+			},
+			"File": {
+				"PatternLayout": {
+					"pattern": "%d{yyyy-MM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n"
+				},
+				"name": "File",
+				"fileName": "c:/resturent/app-start.log"
+			},
+			"RollingFile": {
+				"name": "RollingFile",
+				"fileName": "c:/resturent/app.log",
+				"filePattern": "c:/resturent/app.log.%d{yyyy-MM-dd-hh-mm}.gz",
+				"PatternLayout": {
+					"pattern": "%d{yyyy-MM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n"
+				},
+				"Policies": {
+					"SizeBasedTriggeringPolicy": {
+						"size": "10 MB"
+					}
+				},
+				"DefaultRolloverStrategy": {
+					"max": "20"
+				}
+			}
+		},
+		"Loggers": {
+			"AsyncRoot": {
+				"AppenderRef": [
+					{
+						"ref": "Console"
+					},
+					{
+						"ref": "File"
+					}
+				],
+				"level": "info"
+			},
+			"AsyncLogger": [
+				{
+					"name": "batch",
+					"level": "error",
+					"additivity" : "false",
+					"appender-ref": [
+						{
+							"ref": "Console"
+						},
+						{
+							"ref": "RollingFile"
+						}
+					]
+				},
+				{
+					"name": "org.springframework.batch.core",
+					"level": "error",
+					"additivity" : "false",
+					"appender-ref": [
+						{
+							"ref": "Console"
+						},
+						{
+							"ref": "RollingFile"
+						}
+					]
+				}
+			]
+		}
+	}
+}
