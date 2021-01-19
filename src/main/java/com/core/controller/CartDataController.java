@@ -47,7 +47,7 @@ public class CartDataController {
        
     
 
-    @DeleteMapping
+    /*@DeleteMapping
     public HttpEntity<CartData> deleteCartData(@RequestHeader HttpHeaders httpHeaders, @RequestParam(value = "filters", required = true) String filters) {
     	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
     	if(emailList.isEmpty()) {
@@ -55,9 +55,9 @@ public class CartDataController {
     	}
     	cartDataService.deleteItem(emailList.get(0), filters);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }
+    }*/
     
-    @PostMapping
+    /*@PostMapping
     public HttpEntity<EntityModel<CartData>> saveCartData(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody CartData cartData) {
     	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
     	if(emailList.isEmpty()) {
@@ -72,14 +72,15 @@ public class CartDataController {
         
         
         return new ResponseEntity<>(cardDataResponse, HttpStatus.CREATED);
-    }
+    }*/
     
     @GetMapping
     public HttpEntity<EntityModel<CartDataResponse>> findCartData(@RequestHeader HttpHeaders httpHeaders) {
     	
     	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
     	if(emailList.isEmpty()) {
-    		throw new InvalidDataException("bad.email.data");
+    		//throw new InvalidDataException("bad.email.data");
+    		return new ResponseEntity<EntityModel<CartDataResponse>>(HttpStatus.OK);
     	}
     	CartDataResponse cartData = cartDataService.findCardDataResponse(emailList.get(0));
 
@@ -92,10 +93,10 @@ public class CartDataController {
         
         cartDataResponse.add(linkTo(methodOn(CartDataController.class).findCartData(httpHeaders)).withSelfRel().expand());
 
-        return ResponseEntity.ok(cartDataResponse);
+        return new ResponseEntity<>(cartDataResponse, httpHeaders, HttpStatus.OK);
     }
     
-    @PatchMapping
+    /*@PatchMapping
     public HttpEntity<EntityModel<CartData>> patchJobData(@RequestHeader HttpHeaders httpHeaders,
     		@RequestBody CartData cartData) {
 
@@ -107,7 +108,7 @@ public class CartDataController {
         EntityModel<CartData> savedItemData = EntityModel.of(new CartData());
         savedItemData.add(linkTo(methodOn(CartDataController.class).findCartData(httpHeaders)).withRel("cardData").expand());
         return ResponseEntity.ok(savedItemData);
-    }
+    }*/
     
     
 }

@@ -7,7 +7,6 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 import com.core.exception.application.InvalidDataException;
-import com.core.mongo.data.embedded.Item;
 import com.core.mongo.data.entity.BookTableData;
 import com.core.mongo.data.entity.CartData;
 import com.core.utils.CommonConstants;

@@ -2,6 +2,7 @@ package com.core.controller;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
+import static com.core.utils.CommonConstants.BLANK_STRING;
 
 import java.util.List;
 
@@ -23,24 +24,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.core.exception.application.InvalidDataException;
 import com.core.mongo.data.entity.CartData;
 import com.core.mongo.data.entity.ItemData;
-import com.core.service.CartDataService;
 import com.core.service.ItemDataService;
-import com.core.validator.CartDataValidator;
+import com.core.utils.IdGenerator;
 import com.core.validator.ItemDataValidator;
 
 @RestController
 @RequestMapping(value = "/v1/item")
 public class ItemDataController {
 
-    //@Autowired
-    //private CartDataService cartDataService;
-    
-    @Autowired
+    private static final String  USER_ID = "X-User-Id";
+	
+	@Autowired
     private ItemDataService itemDataService;
 
     @Autowired
@@ -55,9 +53,9 @@ public class ItemDataController {
 
     @DeleteMapping(value = "/{id}")
     public HttpEntity<CartData> deleteItemData(@RequestHeader HttpHeaders httpHeaders, @PathVariable("id") String id) {
-    	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
+    	List<String> emailList = httpHeaders.getValuesAsList(USER_ID);
     	if(emailList.isEmpty()) {
-    		throw new InvalidDataException("bad.email.data");
+    		throw new InvalidDataException("bad.access.data");
     	}
     	itemDataService.deleteItem(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -65,17 +63,19 @@ public class ItemDataController {
     
     @PostMapping
     public HttpEntity<EntityModel<ItemData>> saveItemData(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody ItemData itemData) {
-    	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
-    	if(emailList.isEmpty()) {
-    		throw new InvalidDataException("bad.email.data");
-    	}
-    	ItemData savedItemData = itemDataService.saveToCart(itemData, emailList.get(0));
+    	List<String> emailList = httpHeaders.getValuesAsList(USER_ID);
+    	String email =emailList.isEmpty() ? IdGenerator.generateUniqueStringUpperCase(36) : emailList.get(0);
+    	
+    	ItemData savedItemData = itemDataService.saveToCart(itemData, email);
+    	ItemData savedItemData1 = new ItemData();
+    	savedItemData1.setEmail(email);
 
-        EntityModel<ItemData> itemDataResponse = EntityModel.of(new ItemData());
+        EntityModel<ItemData> itemDataResponse = EntityModel.of(savedItemData1);
         
         itemDataResponse.add(
                 linkTo(methodOn(ItemDataController.class).findItemData(savedItemData.getIdentifier())).withRel("itemData").expand());
-        
+        //HttpHeaders httpHeader = new HttpHeaders();
+        //httpHeader.add(USER_ID, email);
         
         return new ResponseEntity<>(itemDataResponse, HttpStatus.CREATED);
     }
@@ -102,9 +102,9 @@ public class ItemDataController {
     public HttpEntity<EntityModel<ItemData>> patchJobData(@PathVariable("id") String id, @RequestHeader HttpHeaders httpHeaders,
     		@RequestBody ItemData itemData) {
 
-    	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
+    	List<String> emailList = httpHeaders.getValuesAsList(USER_ID);
     	if(emailList.isEmpty()) {
-    		throw new InvalidDataException("bad.email.data");
+    		throw new InvalidDataException("bad.access.data");
     	}
     	itemData.setIdentifier(id);
     	itemDataService.patchItemData(emailList.get(0), itemData);

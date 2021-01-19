@@ -12,7 +12,7 @@ public interface BookTableService {
 
     public BookTableData saveBookData(String pathUrl, HttpHeaders httpHeaders, BookTableData bookTable);
     
-    public void patchBookData(String id);
+    public void patchBookData(String id, String status);
 
     
 

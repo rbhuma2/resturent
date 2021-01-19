@@ -52,13 +52,13 @@ public class EmailNotification {
     	ownerContent.append("<HTML><Table border=0 cellpadding=5 cellspacing=0>");
     	
         messageContent.append("<tr><td><b>Name:</b> </td><td> " + bookTable.getName() + "</td></tr>");
-        messageContent.append("<tr><td><b>Booking Time:</b></td><td> " + bookTable.getBookTime() + "</td></tr>");
+        messageContent.append("<tr><td><b>Booking Time:</b></td><td> " + bookTable.getDate() +" " +bookTable.getBookTime() + "</td></tr>");
         messageContent.append("<tr><td><b>No of Persons:</b></td><td> " + bookTable.getPersons() + "</td></tr>");
         messageContent.append("<tr><td><b>Status:</b></td><td>" + bookTable.getStatus() + "</td></tr>");
         messageContent.append("</table></html>");
         
         ownerContent.append("<tr><td><b>Name:</b> </td><td> " + bookTable.getName() + "</td></tr>");
-        ownerContent.append("<tr><td><b>Booking Time:</b></td><td> " + bookTable.getBookTime() + "</td></tr>");
+        ownerContent.append("<tr><td><b>Booking Time:</b></td><td> " + bookTable.getDate() +" " +bookTable.getBookTime() + "</td></tr>");
         ownerContent.append("<tr><td><b>No of Persons:</b></td><td> " + bookTable.getPersons() + "</td></tr>");
         ownerContent.append("<tr><td><b>Status:</b></td><td>" + bookTable.getStatus() + "</td></tr>");
         ownerContent.append("</table></html>");
@@ -70,8 +70,11 @@ public class EmailNotification {
         sendEmailWithMime(subject, messageContent.toString(), notifyTo, "Table Reservation");
         
         if(httpHeaders !=null) {
-        	String link = "http://"+httpHeaders.getHost()+pathUrl+"/" + bookTable.getIdentifier();
-            ownerContent.append("<a href='"+ link  +"' target=\"_blank\">Approve</a>");
+        	String approveLink = "http://"+httpHeaders.getHost()+pathUrl+"/" + bookTable.getIdentifier() +"/approve" ;
+            ownerContent.append("<a href='"+ approveLink  +"' target=\"_blank\">Approve</a>");
+            ownerContent.append("     ");
+            String rejectLink = "http://"+httpHeaders.getHost()+pathUrl+"/" + bookTable.getIdentifier() +"/reject" ;
+            ownerContent.append("<a href='"+ rejectLink  +"' target=\"_blank\">Reject</a>");
             sendEmailWithMime(subject, ownerContent.toString(), ownerEmail, "Table Reservation");
         }
         

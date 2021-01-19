@@ -50,7 +50,7 @@ public class BookTableServiceImpl implements BookTableService{
 	}
 	
 	@Override
-	public void patchBookData(String id) {
+	public void patchBookData(String id, String status) {
 		
 		BookTableData bookTable = findBookTabeData(id);
 		//BookTableData bookTable = bookTableRepository.findByIdentifierAndStatus(id, "Pending");
@@ -59,7 +59,7 @@ public class BookTableServiceImpl implements BookTableService{
 			throw new DataNotFoundException("no.data.found");
 		}
 		
-		bookTable.setStatus("Approved");
+		bookTable.setStatus(status);
 		bookTableRepository.save(bookTable);
 		
 		if(Boolean.valueOf(isNotificationEnable)) {

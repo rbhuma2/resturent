@@ -34,7 +34,7 @@ import com.core.service.FeedBackService;
 import com.core.validator.FeedBackValidator;
 
 @RestController
-@RequestMapping(value = "/v1/feedBack")
+@RequestMapping(value = "/v1/feedback")
 public class FeedBackController {
 
     private static final int INITIAL_PAGE = 1;

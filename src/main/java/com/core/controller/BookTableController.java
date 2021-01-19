@@ -32,7 +32,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.core.model.Paging;
 import com.core.mongo.data.entity.BookTableData;
-import com.core.security.annotation.UserAuthorization;
 import com.core.service.BookTableService;
 import com.core.validator.BookTableValidator;
 
@@ -55,7 +54,7 @@ public class BookTableController {
     }
     
     @GetMapping
-    public HttpEntity<CollectionModel<EntityModel<BookTableData>>> findAllJobs(
+    public HttpEntity<CollectionModel<EntityModel<BookTableData>>> findAllReservations(
             @RequestParam(value = "filters", required = false) String filters,
             @RequestParam(value = "query", required = false) String query,
             @RequestParam(value = "page", required = false) Integer page,
@@ -64,55 +63,35 @@ public class BookTableController {
         int evalPageSize = size == null || size < 1 ? INITIAL_PAGE_SIZE : size;
         int evalPage = page == null || page < 1 ? INITIAL_PAGE : page;
 
-        List<EntityModel<BookTableData>> jobDataResource = new ArrayList<>();
+        List<EntityModel<BookTableData>> bookDataResponse = new ArrayList<>();
         List<Link> links = new ArrayList<>();
 
         Paging paging = new Paging();
 
-        //List<JobData> jobDataList = bookTableService.findJobs(filters, query, evalPage, evalPageSize, paging);
         
-        //if(jobDataList != null && !jobDataList.isEmpty()) {
-        //    for (JobData jobData : jobDataList) {
-				/*
-				 * Link jobDetailLink =
-				 * linkTo(methodOn(ReservationController.class).findJobData(jobData.getJobId()))
-				 * .withRel("job") .expand(); jobDataResource.add(EntityModel.of(jobData,
-				 * jobDetailLink));
-				 * 
-				 * Link item =
-				 * linkTo(methodOn(ReservationController.class).findJobData(jobData.getJobId()))
-				 * .withRel("item").expand(); links.add(item);
-				 */
-        //    }
-
             if (paging.getFirstPage() > 0) {
-                links.add(linkTo(methodOn(BookTableController.class).findAllJobs(filters, query, paging.getFirstPage(),
+                links.add(linkTo(methodOn(BookTableController.class).findAllReservations(filters, query, paging.getFirstPage(),
                         paging.getPageSize())).withRel("first").expand());
             }
             if (paging.getLastPage() > 0) {
-                links.add(linkTo(methodOn(BookTableController.class).findAllJobs(filters, query, paging.getLastPage(),
+                links.add(linkTo(methodOn(BookTableController.class).findAllReservations(filters, query, paging.getLastPage(),
                         paging.getPageSize())).withRel("last").expand());
             }
             if (paging.getNextPage() > 0) {
-                links.add(linkTo(methodOn(BookTableController.class).findAllJobs(filters, query, paging.getNextPage(),
+                links.add(linkTo(methodOn(BookTableController.class).findAllReservations(filters, query, paging.getNextPage(),
                         paging.getPageSize())).withRel("next").expand());
             }
             if (paging.getPreviousPage() > 0) {
-                links.add(linkTo(methodOn(BookTableController.class).findAllJobs(filters, query, paging.getPreviousPage(),
+                links.add(linkTo(methodOn(BookTableController.class).findAllReservations(filters, query, paging.getPreviousPage(),
                         paging.getPageSize())).withRel("previous").expand());
             }
             if (paging.getCurrentPage() > 0) {
-                links.add(linkTo(methodOn(BookTableController.class).findAllJobs(filters, query, paging.getCurrentPage(),
+                links.add(linkTo(methodOn(BookTableController.class).findAllReservations(filters, query, paging.getCurrentPage(),
                         paging.getPageSize())).withRel("current").expand());
             }
-        //}
-        
+                
 
-        //Link self = linkTo(methodOn(ReservationController.class).findAllJobs(filters, query, evalPage, evalPageSize))
-        //        .withSelfRel().expand();
-        //links.add(self);
-
-        return ResponseEntity.ok(CollectionModel.of(jobDataResource, links));
+        return ResponseEntity.ok(CollectionModel.of(bookDataResponse, links));
     }
 
     
@@ -132,7 +111,7 @@ public class BookTableController {
         bookTableResponse.add(
                 linkTo(methodOn(BookTableController.class).findBookData(savedBookTableData.getIdentifier())).withRel("bookTable").expand());
         bookTableResponse
-                .add(linkTo(methodOn(BookTableController.class).findAllJobs(null, null, INITIAL_PAGE, INITIAL_PAGE_SIZE))
+                .add(linkTo(methodOn(BookTableController.class).findAllReservations(null, null, INITIAL_PAGE, INITIAL_PAGE_SIZE))
                         .withRel("up"));
 
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -150,22 +129,29 @@ public class BookTableController {
             return new ResponseEntity<EntityModel<BookTableData>>(HttpStatus.OK);
         }
 
-        EntityModel<BookTableData> jobDataResponse = EntityModel.of(bookTableData);
+        EntityModel<BookTableData> bookDataResponse = EntityModel.of(bookTableData);
 
         
-        jobDataResponse.add(linkTo(methodOn(BookTableController.class).findBookData(id)).withSelfRel().expand());
+        bookDataResponse.add(linkTo(methodOn(BookTableController.class).findBookData(id)).withSelfRel().expand());
 
-        jobDataResponse
-                .add(linkTo(methodOn(BookTableController.class).findAllJobs(null, null, null, null)).withRel("up").expand());
+        bookDataResponse
+                .add(linkTo(methodOn(BookTableController.class).findAllReservations(null, null, null, null)).withRel("up").expand());
 
-        return ResponseEntity.ok(jobDataResponse);
+        return ResponseEntity.ok(bookDataResponse);
     }
     
     @GetMapping(value = "/{id}/approve")
     public HttpEntity<String> approveBooking(@PathVariable("id") String id) {
-    	bookTableService.patchBookData(id);
+    	bookTableService.patchBookData(id, "Approved");
         
         return ResponseEntity.ok("Approved");
+    }
+    
+    @GetMapping(value = "/{id}/reject")
+    public HttpEntity<String> rejectBooking(@PathVariable("id") String id) {
+    	bookTableService.patchBookData(id, "Rejected");
+        
+        return ResponseEntity.ok("Reject");
     }
     
     

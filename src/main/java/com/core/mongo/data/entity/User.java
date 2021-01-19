@@ -22,17 +22,19 @@ public class User {
     private String phoneNumber;
     private String password;
     private String confirmedPassword;
+    private String name;
 
     @JsonCreator
     public User(@JsonProperty("id") String identifier, @JsonProperty("email") String email,
             @JsonProperty("phoneNumber") String phoneNumber, @JsonProperty("password") String password,
-            @JsonProperty("confirmedPassword") String confirmedPassword) {
+            @JsonProperty("confirmedPassword") String confirmedPassword, @JsonProperty("name") String name) {
         super();
         this.identifier = identifier;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
         this.confirmedPassword = confirmedPassword;
+        this.name = name;
     }
 
     public User() {
@@ -76,6 +78,14 @@ public class User {
 
 	public void setConfirmedPassword(String confirmedPassword) {
 		this.confirmedPassword = confirmedPassword;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	

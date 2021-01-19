@@ -14,7 +14,6 @@ public class CommonConstants {
     public static final int NUM_PARAM_ALLOWED = 2000;
     public static final int MIN_DEFER_SECONDS = 120;
     public static final String BLANK_STRING = "";
-    public static final String CASH_SUSPENSE_REFERENCE_ID = "BCMBSUS";
     public static final short SHORT_ZERO = 0;
     public static final short SHORT_ONE = 1;
     public static final short PRIORITY_LEVEL_100 = 100;
@@ -32,8 +31,6 @@ public class CommonConstants {
     public static final String ZEROS_10 = "0000000000";
     public static final String ZEROS_05 = "00000";
     public static final String ZEROS_04 = "0000";
-    public static final String SYSTEM_USER_ID = "SYSTEM";
-    public static final String SYSTEMIW_USER_ID = "SYSTEMIW";
     public static final char CHAR_A = 'A';
     public static final char CHAR_B = 'B';
     public static final char CHAR_C = 'C';
@@ -79,66 +76,9 @@ public class CommonConstants {
     public static final char CHAR_COLON = ':';
     public static final char CHAR_COMMA = ',';
     public static final BigDecimal BIGDECIMAL_ZERO = BigDecimal.ZERO;
-    public static final String ISSUE_NODE = "BATCHAPI";
-    public static final char ISSUE_PLATFORM = CHAR_B;
-    public static final String APP_VERSION_ID = BLANK_STRING;
-    public static final String IAP_VERSION_ID = "V80";
-    public static final String USER_ID = BLANK_STRING;
-    public static final String PRIOR_ACY_ID = BLANK_STRING;
     public static final BigDecimal BIGDECIMAL_HUNDRED = BigDecimal.valueOf(100.00);
-    public static final String CASH_JOURNAL_REFERENCE_ID = "BCMBCHJ";
-    public static final String CASH_JOURNAL_SUMMARY_REFERENCE_ID = "BCMBCJS";
     public static final String STRING_ZERO = "0";
-    public static final String HOLIDAY_8 = "H8";
-    public static final String HOLIDAY_6 = "H6";
-    public static final String HOLIDAY_5 = "H5";
-    public static final String HOLIDAY_3 = "H3";
-    public static final String HOLIDAY_1 = "H1";
+        
     
-    public enum Indicator {
-        Y("Yes"), N("No");
-
-        private final String type;
-
-        private Indicator(String type) {
-            this.type = type;
-        }
-
-        public boolean hasValue(String value) {
-            return value == null ? Boolean.FALSE : type.equals(value);
-        }
-
-        @Override
-        public String toString() {
-            return this.type;
-        }
-
-    }
-
-    public enum BusCodeTranslationType {
-        APP("APP"), ACTION("ATN"), OBJECT("OBJ");
-        private final String type;
-
-        private BusCodeTranslationType(String type) {
-            this.type = type;
-        }
-
-        public String getValue() {
-            return type;
-        }
-    }
-
-    public enum BusCodeTranslationParentCode {
-        ACTIONCD("ATNCD"), APPCD("APPCD"), OBJECTCD("OBJCD");
-        private final String type;
-
-        private BusCodeTranslationParentCode(String type) {
-            this.type = type;
-        }
-
-        public String getValue() {
-            return type;
-        }
-    }
 
 }

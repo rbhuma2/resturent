@@ -125,16 +125,25 @@ public class MenuItemDataServiceImpl implements MenuItemDataService {
         Map<String, List<MenuItemData>> menuItemMap = new HashMap<>();
         if (itemDataListPage != null && itemDataListPage.getTotalElements() != 0) {
             for (MenuItemData itemData : itemDataListPage) {
+            	MenuItemData itemData1 = new MenuItemData();
+            	itemData1.setAmount(itemData.getAmount());
+            	itemData1.setCategory(itemData.getCategory());
+            	itemData1.setDescription(itemData.getDescription());
+            	itemData1.setImage(itemData.getImage());
+            	itemData1.setName(itemData.getName());
+            	itemData1.setSpiceLevel(itemData.isSpiceLevel());
+            	itemData1.setSubType(itemData.getSubType());
+            	itemData1.setType(itemData.getType());;
             	List<MenuItemData> menuDataList = null;
-            	if(menuItemMap.containsKey(itemData.getType())) {
-            		menuDataList = menuItemMap.get(itemData.getType());
-            		menuDataList.add(itemData);
+            	if(menuItemMap.containsKey(itemData1.getType())) {
+            		menuDataList = menuItemMap.get(itemData1.getType());
+            		menuDataList.add(itemData1);
             	}else {
             		menuDataList = new ArrayList<>();
-            		menuDataList.add(itemData);
+            		menuDataList.add(itemData1);
             	}
             	
-            	menuItemMap.put(itemData.getType(), menuDataList);
+            	menuItemMap.put(itemData1.getType(), menuDataList);
             }
         } else {
             return itemDataList;

@@ -43,6 +43,10 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User validateUserData(User user) {
 		
+		if(user.getEmail() == null || user.getPassword() == null
+				|| user.getEmail().isEmpty() || user.getPassword().isEmpty()) {
+			throw new DataNotFoundException("bad.email.validation");
+		}
 		String password = PasswordUtils.generateSecurePassword(user.getPassword(), saltValue);
 		user.setPassword(password);
 		User userData = null;

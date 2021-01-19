@@ -6,7 +6,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.core.mongo.data.embedded.AddOnItem;
-import com.core.mongo.data.embedded.Item;
 
 
 @Document(collection = "cartItemData")
@@ -15,18 +14,21 @@ public class ItemData {
     @Id
     private String identifier;
     private String name;
+    private double amount;
 	private int quantity;
 	private boolean isOnlyQuantity;
 	private double netAmount;
 	private String type;
 	private String subType;
 	private String spiceLevel;
-	private String description;
+	private String specialNote;		;
 	private List<AddOnItem> addOnItemList;
+	private String image;
+	private String email;
 	
 	
-	public ItemData(String name, int quantity, double netAmount, String type, String subType, String spiceLevel, String description,
-			List<AddOnItem> addOnItemList, boolean isOnlyQuantity) {
+	public ItemData(String name, int quantity, double netAmount, String type, String subType, String spiceLevel, String specialNote,
+			List<AddOnItem> addOnItemList, boolean isOnlyQuantity, double amount, String image,String email) {
 		super();
 		this.name = name;
 		this.quantity = quantity;
@@ -34,9 +36,12 @@ public class ItemData {
 		this.type = type;
 		this.subType = subType;
 		this.spiceLevel = spiceLevel;
-		this.description = description;
+		this.specialNote = specialNote;
 		this.addOnItemList = addOnItemList;
 		this.isOnlyQuantity = isOnlyQuantity;
+		this.amount = amount;
+		this.image = image;
+		this.email = email;
 	}
 
 	public String getName() {
@@ -87,12 +92,12 @@ public class ItemData {
 		this.spiceLevel = spiceLevel;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getSpecialNote() {
+		return specialNote;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setSpecialNote(String specialNote) {
+		this.specialNote = specialNote;
 	}
 
     public ItemData() {
@@ -122,6 +127,30 @@ public class ItemData {
 
 	public void setOnlyQuantity(boolean isOnlyQuantity) {
 		this.isOnlyQuantity = isOnlyQuantity;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
    
     

@@ -56,6 +56,8 @@ public class CartDataServiceImpl implements CartDataService{
 			response.setTax(taxAmount.doubleValue());
 			BigDecimal totalAmount = BigDecimal.valueOf(cartData.getTotalAmount()).setScale(2, RoundingMode.HALF_EVEN);
 			response.setTotalAmount(totalAmount.doubleValue());
+			BigDecimal subTotal = BigDecimal.valueOf(cartData.getSubTotalAmount()).setScale(2, RoundingMode.HALF_EVEN);
+			response.setSubTotal(subTotal.doubleValue());
 			response.setTotalItems(cartData.getTotalItems());
 			if(cartData.getItemList() !=null && !cartData.getItemList().isEmpty()) {
 				response.setItemList(new ArrayList<>());
@@ -120,8 +122,9 @@ public class CartDataServiceImpl implements CartDataService{
 					totalAmount += existingItem.getNetAmount();
 				}
 			}
-			cartData.setTotalAmount(totalAmount);
-			cartData.setTax(cartData.getTotalAmount() *0.2);
+			cartData.setSubTotalAmount(totalAmount);
+			cartData.setTax(cartData.getSubTotalAmount() *0.2);
+			cartData.setTotalAmount(cartData.getSubTotalAmount() + cartData.getTax());
 			cartDataRepository.save(cartData);
 		}
 		            
@@ -150,8 +153,9 @@ public class CartDataServiceImpl implements CartDataService{
 				totalAmount += existingItem.getNetAmount();
 			}
 		}
-		cartData.setTotalAmount(totalAmount);
-		cartData.setTax(cartData.getTotalAmount() *0.2);
+		cartData.setSubTotalAmount(totalAmount);
+		cartData.setTax(cartData.getSubTotalAmount() *0.2);
+		cartData.setTotalAmount(cartData.getSubTotalAmount() + cartData.getTax());
 		return cartData;
 	}
 
