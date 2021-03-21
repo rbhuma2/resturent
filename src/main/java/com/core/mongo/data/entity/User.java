@@ -23,11 +23,13 @@ public class User {
     private String password;
     private String confirmedPassword;
     private String name;
+    private boolean isAdmin; 
 
     @JsonCreator
     public User(@JsonProperty("id") String identifier, @JsonProperty("email") String email,
             @JsonProperty("phoneNumber") String phoneNumber, @JsonProperty("password") String password,
-            @JsonProperty("confirmedPassword") String confirmedPassword, @JsonProperty("name") String name) {
+            @JsonProperty("confirmedPassword") String confirmedPassword, @JsonProperty("name") String name,
+            @JsonProperty("isAdmin") boolean isAdmin) {
         super();
         this.identifier = identifier;
         this.email = email;
@@ -35,6 +37,7 @@ public class User {
         this.password = password;
         this.confirmedPassword = confirmedPassword;
         this.name = name;
+        this.isAdmin = isAdmin;
     }
 
     public User() {
@@ -88,7 +91,13 @@ public class User {
 		this.name = name;
 	}
 
-	
-    
+	public boolean isAdmin() {
+		return isAdmin;
+	}
 
+	public void setAdmin(boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	
 }

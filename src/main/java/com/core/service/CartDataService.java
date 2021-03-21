@@ -6,13 +6,11 @@ import com.core.mongo.data.entity.ItemData;
 
 public interface CartDataService {
 
-    public CartData saveToCart(CartData  cartData);
-
-	public void deleteItem(String email, String filters);
+    public void deleteItem(String email, String filters);
 	
 	public CartData findCardData(String email);
 	
-	public void patchCardData(String email, CartData  cartData);
+	public void saveCardData(String email, CartData  cartData);
 	
 	public void deleteCart(String id);
 	

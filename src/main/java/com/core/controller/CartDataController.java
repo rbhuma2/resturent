@@ -79,7 +79,6 @@ public class CartDataController {
     	
     	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
     	if(emailList.isEmpty()) {
-    		//throw new InvalidDataException("bad.email.data");
     		return new ResponseEntity<EntityModel<CartDataResponse>>(HttpStatus.OK);
     	}
     	CartDataResponse cartData = cartDataService.findCardDataResponse(emailList.get(0));
@@ -96,19 +95,19 @@ public class CartDataController {
         return new ResponseEntity<>(cartDataResponse, httpHeaders, HttpStatus.OK);
     }
     
-    /*@PatchMapping
-    public HttpEntity<EntityModel<CartData>> patchJobData(@RequestHeader HttpHeaders httpHeaders,
+    @PostMapping
+    public HttpEntity<EntityModel<CartData>> saveCartData(@RequestHeader HttpHeaders httpHeaders,
     		@RequestBody CartData cartData) {
 
     	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
     	if(emailList.isEmpty()) {
-    		throw new InvalidDataException("bad.email.data");
+    		throw new InvalidDataException("author.invalid");
     	}
-    	cartDataService.patchCardData(emailList.get(0), cartData);
+    	cartDataService.saveCardData(emailList.get(0), cartData);
         EntityModel<CartData> savedItemData = EntityModel.of(new CartData());
         savedItemData.add(linkTo(methodOn(CartDataController.class).findCartData(httpHeaders)).withRel("cardData").expand());
         return ResponseEntity.ok(savedItemData);
-    }*/
+    }
     
     
 }

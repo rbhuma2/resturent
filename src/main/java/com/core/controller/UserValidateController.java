@@ -24,14 +24,16 @@ public class UserValidateController {
         
     @PostMapping
     public HttpEntity<EntityModel<User>> saveUserData(@RequestBody User user) {
-    	User userData =userService.validateUserData(user);
-
+    	User userData = userService.validateUserData(user);
+    	
+    	User userResponse = new User();
+    	userResponse.setAdmin(userData.isAdmin());
         
-    	EntityModel<User> userResponse = EntityModel.of(userData);
+    	EntityModel<User> response = EntityModel.of(userResponse);
         
         HttpHeaders httpHeaders = new HttpHeaders();
         
-        return new ResponseEntity<>(userResponse, httpHeaders, HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(response, httpHeaders, HttpStatus.ACCEPTED);
     }
     
     

@@ -26,14 +26,14 @@ public class MenuItemData {
     private double amount;
     private boolean isSpiceLevel;
     private String image;
-    
+    private String item;
 
     @JsonCreator
     public MenuItemData(@JsonProperty("id") String identifier, @JsonProperty("name") String name,
             @JsonProperty("description") String description, @JsonProperty("amount") double amount,
             @JsonProperty("type") String type, @JsonProperty("category") String category,
             @JsonProperty("subType") String subType, @JsonProperty("isSpiceLevel") boolean isSpiceLevel,
-            @JsonProperty("image") String image) {
+            @JsonProperty("image") String image, @JsonProperty("item") String item) {
         super();
         this.identifier = identifier;
         this.name = name;
@@ -44,6 +44,7 @@ public class MenuItemData {
         this.subType = subType;
         this.isSpiceLevel = isSpiceLevel;
         this.image = image;
+        this.item = item;
     }
 
 	public MenuItemData() {
@@ -120,6 +121,14 @@ public class MenuItemData {
 
 	public void setImage(String image) {
 		this.image = image;
+	}
+
+	public String getItem() {
+		return item;
+	}
+
+	public void setItem(String item) {
+		this.item = item;
 	}
 	
 	

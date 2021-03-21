@@ -1,95 +1,46 @@
 plugins {
 	id 'org.springframework.boot' version '2.3.3.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
-	id "org.owasp.dependencycheck" version "5.3.2"
-  	id "project-report"
 	id 'java'
 	id 'war'
 }
 
-
+group = 'com'
+version = '0.0.1-SNAPSHOT'
 war.enabled=true
-
 sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
-	//FileTree tree = fileTree(dir: 'lib', include: ['*.jar']) 
-	//if(!tree.isEmpty()) { 
-	//	throw new GradleException("Licensed jar files are missing in Lib folder") 
-	//}
-}
-
-configurations {
-	developmentOnly
-	runtimeClasspath {
-		extendsFrom developmentOnly
-	}
-	implementation.exclude module:'spring-boot-starter-logging'
+	
 }
 
 dependencies {
+	
 	def jacksonVersion = "2.10.0"
 	def jacksonModuleJsonSchemaVersion = "2.10.0"
-		
-    def log4j2Disruptor = "3.4.2"
-	
-	def jwtVersion = "8.4"
-	def gsonVersion = "2.8.6"
-	def poiVersion = "4.1.2"
-	
+	def log4j2Disruptor = "3.4.2"
 	def commonsLang3Version = "3.9"
 	def commonsBeanutilsVersion = "1.9.4"
 	def commonsTextVersion = "1.8"
 	
-	def openAPIVersion = "1.4.1"
-    def xstreamVersion = "1.4.12"
-	
 	//Jackson Libraries
-    implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
-    implementation "com.fasterxml.jackson.module:jackson-module-jsonSchema:$jacksonModuleJsonSchemaVersion"
-    
-	implementation ('org.springframework.boot:spring-boot-starter-batch') {
-		exclude group:'org.springframework.boot', module: 'spring-boot-starter-logging'
-	}
+	implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+	implementation "com.fasterxml.jackson.module:jackson-module-jsonSchema:$jacksonModuleJsonSchemaVersion"
+	
+	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 	implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'	
-	implementation 'org.springframework.data:spring-data-mongodb'
-	implementation 'org.springframework.data:spring-data-commons'
-	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
-    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 	
-    implementation "com.lmax:disruptor:$log4j2Disruptor"
-	
-	implementation "org.apache.commons:commons-lang3:$commonsLang3Version"
-	implementation "org.apache.commons:commons-text:$commonsTextVersion"
-    implementation "commons-io:commons-io:2.6"
-    //commons-beanutils
-    implementation "commons-beanutils:commons-beanutils:$commonsBeanutilsVersion"
-	
-	implementation "com.nimbusds:nimbus-jose-jwt:$jwtVersion"
-    implementation "com.google.code.gson:gson:$gsonVersion"
-    
-    //apache POI for excel export
-    implementation "org.apache.poi:poi-ooxml:$poiVersion"
-    
-    implementation "org.springdoc:springdoc-openapi-ui:$openAPIVersion"
-    implementation "com.thoughtworks.xstream:xstream:$xstreamVersion"
-	// https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc
-	compile group: 'com.microsoft.sqlserver', name: 'mssql-jdbc', version: '7.4.1.jre8'
-	// https://mvnrepository.com/artifact/mysql/mysql-connector-java
-	compile group: 'mysql', name: 'mysql-connector-java', version: '8.0.18'
 	// https://mvnrepository.com/artifact/commons-validator/commons-validator
 	compile group: 'commons-validator', name: 'commons-validator', version: '1.7'
-	
-	
-	runtime('com.microsoft.sqlserver:mssql-jdbc')
-	
-    
-	developmentOnly 'org.springframework.boot:spring-boot-devtools'
-//	implementation fileTree(dir: 'lib', include: '*.jar')
+	implementation "org.apache.commons:commons-lang3:$commonsLang3Version"
+	implementation "org.apache.commons:commons-text:$commonsTextVersion"
+	implementation 'org.springframework.data:spring-data-mongodb'
+	implementation group: 'com.stripe', name: 'stripe-java', version: '20.33.0'
+	/*implementation ('org.springframework.boot:spring-boot-starter-batch') {
+		exclude group:'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}*/
 }
 
 test {

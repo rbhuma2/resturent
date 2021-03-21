@@ -1,15 +1,10 @@
 package com.core.validator;
 
-import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import com.core.exception.application.InvalidDataException;
-import com.core.mongo.data.entity.BookTableData;
 import com.core.mongo.data.entity.CartData;
-import com.core.utils.CommonConstants;
 import com.core.utils.DateRoutine;
 
 @Component
@@ -27,17 +22,7 @@ public class CartDataValidator implements Validator {
 
     	CartData cartData = (CartData) target;
 
-    	/*for(Item item : cartData.getItemList()) {
-        	if(item.getName() == null || item.getName().isEmpty()) {
-        		throw new InvalidDataException("bad.request.missing.parameter", new Object[] { "name" });
-        		
-        	}
-    		
-            
-        }*/
-    	
-
-        if (!errors.getAllErrors().isEmpty()) {
+    	if (!errors.getAllErrors().isEmpty()) {
             return;
         }
         
@@ -46,7 +31,7 @@ public class CartDataValidator implements Validator {
         }
         
         if (cartData.getExpirationDate() == null || cartData.getExpirationDate().isEmpty()) {
-        	cartData.setExpirationDate(DateRoutine.dateTimeAsYYYYMMDDString(DateRoutine.defaultDateTime()));
+        	cartData.setExpirationDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
         }
 
     }

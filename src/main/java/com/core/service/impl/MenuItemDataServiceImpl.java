@@ -133,7 +133,8 @@ public class MenuItemDataServiceImpl implements MenuItemDataService {
             	itemData1.setName(itemData.getName());
             	itemData1.setSpiceLevel(itemData.isSpiceLevel());
             	itemData1.setSubType(itemData.getSubType());
-            	itemData1.setType(itemData.getType());;
+            	itemData1.setType(itemData.getType());
+            	itemData1.setItem(itemData.getItem());
             	List<MenuItemData> menuDataList = null;
             	if(menuItemMap.containsKey(itemData1.getType())) {
             		menuDataList = menuItemMap.get(itemData1.getType());

@@ -16,7 +16,6 @@ import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
 import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
-import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 import com.core.mongo.converter.CustomTimestampReaderConvertor;
 import com.core.mongo.converter.ZonedDateTimeReadConverter;
@@ -28,8 +27,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
 @Configuration
-@EnableMongoRepositories(basePackages = { "batch.core.mongo.data", "batch.billing.mongo.data",
-        "batch.disbursement.mongo.data" })
 public class MongoConfiguration extends AbstractMongoClientConfiguration {
 
     @Value("${app.localTimeZone}")

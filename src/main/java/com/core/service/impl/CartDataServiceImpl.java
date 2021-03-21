@@ -74,17 +74,6 @@ public class CartDataServiceImpl implements CartDataService{
 	}
 	
 	@Override
-	public CartData saveToCart(CartData cartData) {
-		
-		//CartData existingCartData = findCardData(cartData.getEmail());
-		
-		//buildCartData(existingCartData, cartData);
-		
-		//cartDataRepository.save(cartData);
-		return null;
-	}
-	
-	@Override
 	public void saveCartData(String email, ItemData itemData) {
 		
 		CartData cartData = findCardData(email);
@@ -134,7 +123,7 @@ public class CartDataServiceImpl implements CartDataService{
 		
 		if(cartData == null) {
 			cartData = new CartData();
-			cartData.setExpirationDate(DateRoutine.dateTimeAsYYYYMMDDString(DateRoutine.defaultDateTime()));
+			cartData.setExpirationDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.defaultDateTimestamp()));
 		}
 		
 		cartData.setEmail(email);
@@ -159,52 +148,6 @@ public class CartDataServiceImpl implements CartDataService{
 		return cartData;
 	}
 
-	private void buildCartData(CartData existingCartData, CartData cartData) {
-		
-		/*Map<String, Item> itemDataMap = new HashMap<>();
-		
-		if(existingCartData != null) {
-			cartData.setIdentifier(existingCartData.getIdentifier());
-			existingCartData.getItemList().forEach(item -> {
-				itemDataMap.put(item.getName().trim()+item.getType().trim()+item.getSubType().trim(), item);
-			});
-		}
-		
-		cartData.getItemList().forEach(item -> {
-			if(!itemDataMap.isEmpty()) {
-				Item itemData = null;
-				if(itemDataMap.containsKey(item.getName().trim()+item.getType().trim()+item.getSubType().trim())) {
-					
-					itemData = itemDataMap.get(item.getName().trim()+item.getType().trim()+item.getSubType().trim());
-					itemData.setAmount(itemData.getAmount() +item.getAmount());
-					itemData.setQuantity(itemData.getQuantity() +item.getQuantity());
-				}else {
-					itemData = item;
-				}
-				
-				itemDataMap.put(itemData.getName().trim()+itemData.getType().trim()+itemData.getSubType().trim(), itemData);
-				
-			}else {
-				itemDataMap.put(item.getName().trim()+item.getType().trim()+item.getSubType().trim(), item);
-			}
-		});
-		
-		cartData.getItemList().clear();
-		itemDataMap.forEach((key, value) -> {
-			cartData.getItemList().add(value);
-		});
-				
-		cartData.getItemList().forEach(item -> {
-			cartData.setTotalAmount(cartData.getTotalAmount() + item.getAmount());
-			cartData.setTotalItems(cartData.getTotalItems() + item.getQuantity());
-		});
-		
-		cartData.setTax(cartData.getTotalAmount() *  0.2);*/
-		
-		
-		
-	}
-	
 	@Override
 	public void deleteCart(String id) {
 		cartDataRepository.deleteById(id);
@@ -279,58 +222,21 @@ public class CartDataServiceImpl implements CartDataService{
 	}
 
 	@Override
-	public void patchCardData(String email, CartData  cartData) {
+	public void saveCardData(String email, CartData  cartData) {
 		CartData existingCartData = findCardData(email);
 		if(existingCartData == null ) {
 			throw new DataNotFoundException("no.data.found");
 		}
-		
-		CartData newCartData = updateItemData(existingCartData, cartData);
-		if(newCartData != null) {
-			cartDataRepository.save(newCartData);
-		}
+		existingCartData.setExpirationDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
+		cartDataRepository.save(existingCartData);
 		
 		
 	}
 
-	private CartData updateItemData(CartData existingCartData, CartData  cartData) {
-		
-		/*Map<String, Item> itemDataMap = new HashMap<>();
-		existingCartData.getItemList().forEach(item -> {
-			itemDataMap.put(item.getName().trim()+item.getType().trim()+item.getSubType().trim(), item);
-		});
-		
-		String itemValue = cartData.getItemList().get(0).getName().trim()+cartData.getItemList().get(0).getType().trim()+cartData.getItemList().get(0).getSubType().trim(); 
-		if(itemDataMap.containsKey(itemValue)) {
-			itemDataMap.put(itemValue, cartData.getItemList().get(0));
-		}
-		Item itemData = itemDataMap.remove(itemValue);
-		if(itemData != null) {
-			
-			CartData newCartData = new CartData();
-			newCartData.setIdentifier(existingCartData.getIdentifier());
-			newCartData.setEmail(existingCartData.getEmail());
-			newCartData.setExpirationDate(existingCartData.getExpirationDate());
-			
-			itemDataMap.forEach((key, value) -> {
-				if(newCartData.getItemList() == null) {
-					newCartData.setItemList(new ArrayList<>());
-				}
-				newCartData.getItemList().add(value);
-			});
-			
-			newCartData.getItemList().forEach(item -> {
-				newCartData.setTotalAmount(newCartData.getTotalAmount() + item.getAmount());
-				newCartData.setTotalItems(newCartData.getTotalItems() + item.getQuantity());
-			});
-			
-			newCartData.setTax(newCartData.getTotalAmount() *  0.2);
-			
-			return newCartData;
-		}*/
-		return null;
-	}
+	
 
+
+	
 
 	
 
