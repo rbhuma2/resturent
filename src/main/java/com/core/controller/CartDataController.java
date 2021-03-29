@@ -5,8 +5,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpEntity;
@@ -14,15 +12,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.core.exception.application.InvalidDataException;
 import com.core.model.CartDataResponse;
@@ -45,35 +41,6 @@ public class CartDataController {
         binder.setValidator(cartDataValidator);
     }
        
-    
-
-    /*@DeleteMapping
-    public HttpEntity<CartData> deleteCartData(@RequestHeader HttpHeaders httpHeaders, @RequestParam(value = "filters", required = true) String filters) {
-    	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
-    	if(emailList.isEmpty()) {
-    		throw new InvalidDataException("bad.email.data");
-    	}
-    	cartDataService.deleteItem(emailList.get(0), filters);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-    }*/
-    
-    /*@PostMapping
-    public HttpEntity<EntityModel<CartData>> saveCartData(@RequestHeader HttpHeaders httpHeaders, @Valid @RequestBody CartData cartData) {
-    	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
-    	if(emailList.isEmpty()) {
-    		throw new InvalidDataException("bad.email.data");
-    	}
-    	cartData.setEmail(emailList.get(0));
-    	cartDataService.saveToCart(cartData);
-
-        EntityModel<CartData> cardDataResponse = EntityModel.of(new CartData());
-        cardDataResponse.add(
-                linkTo(methodOn(CartDataController.class).findCartData(httpHeaders)).withRel("cardData").expand());
-        
-        
-        return new ResponseEntity<>(cardDataResponse, HttpStatus.CREATED);
-    }*/
-    
     @GetMapping
     public HttpEntity<EntityModel<CartDataResponse>> findCartData(@RequestHeader HttpHeaders httpHeaders) {
     	
@@ -95,15 +62,15 @@ public class CartDataController {
         return new ResponseEntity<>(cartDataResponse, httpHeaders, HttpStatus.OK);
     }
     
-    @PostMapping
-    public HttpEntity<EntityModel<CartData>> saveCartData(@RequestHeader HttpHeaders httpHeaders,
+    @PatchMapping(value = "/{id}")
+    public HttpEntity<EntityModel<CartData>> saveCartData(@RequestHeader HttpHeaders httpHeaders, @PathVariable("id") String id,
     		@RequestBody CartData cartData) {
 
     	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
     	if(emailList.isEmpty()) {
     		throw new InvalidDataException("author.invalid");
     	}
-    	cartDataService.saveCardData(emailList.get(0), cartData);
+    	cartDataService.saveCardData(emailList.get(0), id, cartData);
         EntityModel<CartData> savedItemData = EntityModel.of(new CartData());
         savedItemData.add(linkTo(methodOn(CartDataController.class).findCartData(httpHeaders)).withRel("cardData").expand());
         return ResponseEntity.ok(savedItemData);

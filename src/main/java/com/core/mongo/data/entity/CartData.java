@@ -22,7 +22,7 @@ public class CartData {
     private String email;
     private int totalItems;
     private List<String> itemList;
-    private String expirationDate;
+    private String orderPlaceDate;
     private double tax;
     private boolean isProcessed;
     
@@ -30,7 +30,7 @@ public class CartData {
     @JsonCreator
     public CartData(@JsonProperty("id") String identifier, @JsonProperty("totalAmount") double totalAmount, @JsonProperty("subTotalAmount") double subTotalAmount,
             @JsonProperty("email") String email, @JsonProperty("totalItems") int totalItems, @JsonProperty("itemList") List<String> itemList,
-            @JsonProperty("expirationDate") String expirationDate, @JsonProperty("tax") double tax, @JsonProperty("isProcessed") boolean isProcessed) {
+            @JsonProperty("orderPlaceDate") String orderPlaceDate, @JsonProperty("tax") double tax, @JsonProperty("isProcessed") boolean isProcessed) {
         super();
         this.identifier = identifier;
         this.totalAmount = totalAmount;
@@ -38,7 +38,7 @@ public class CartData {
         this.email = email;
         this.totalItems = totalItems;
         this.itemList = itemList;
-        this.expirationDate = expirationDate;
+        this.orderPlaceDate = orderPlaceDate;
         this.tax = tax;
         this.isProcessed = isProcessed;
     }
@@ -87,12 +87,12 @@ public class CartData {
 		this.itemList = itemList;
 	}
 
-	public String getExpirationDate() {
-		return expirationDate;
+	public String getOrderPlaceDate() {
+		return orderPlaceDate;
 	}
 
-	public void setExpirationDate(String expirationDate) {
-		this.expirationDate = expirationDate;
+	public void setOrderPlaceDate(String orderPlaceDate) {
+		this.orderPlaceDate = orderPlaceDate;
 	}
 
 	public double getTax() {

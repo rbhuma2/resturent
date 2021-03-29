@@ -17,21 +17,21 @@ public class CartDataResponse {
     private String email;
     private int totalItems;
     private List<ItemData> itemList;
-    private String expirationDate;
+    private String orderPlaceDate;
     private double tax;
     private double subTotal;
 
     @JsonCreator
     public CartDataResponse(@JsonProperty("id") String identifier, @JsonProperty("totalAmount") double totalAmount,
             @JsonProperty("email") String email, @JsonProperty("totalItems") int totalItems, @JsonProperty("itemList") List<ItemData> itemList,
-            @JsonProperty("expirationDate") String expirationDate, @JsonProperty("tax") double tax, @JsonProperty("subTotal") double subTotal) {
+            @JsonProperty("orderPlaceDate") String orderPlaceDate, @JsonProperty("tax") double tax, @JsonProperty("subTotal") double subTotal) {
         super();
         this.identifier = identifier;
         this.totalAmount = totalAmount;
         this.email = email;
         this.totalItems = totalItems;
         this.itemList = itemList;
-        this.expirationDate = expirationDate;
+        this.orderPlaceDate = orderPlaceDate;
         this.tax = tax;
         this.subTotal = subTotal;
     }
@@ -80,12 +80,12 @@ public class CartDataResponse {
 		this.itemList = itemList;
 	}
 
-	public String getExpirationDate() {
-		return expirationDate;
+	public String getOrderPlaceDate() {
+		return orderPlaceDate;
 	}
 
-	public void setExpirationDate(String expirationDate) {
-		this.expirationDate = expirationDate;
+	public void setOrderPlaceDate(String orderPlaceDate) {
+		this.orderPlaceDate = orderPlaceDate;
 	}
 
 	public double getTax() {

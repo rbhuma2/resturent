@@ -30,8 +30,8 @@ public class CartDataValidator implements Validator {
             return;
         }
         
-        if (cartData.getExpirationDate() == null || cartData.getExpirationDate().isEmpty()) {
-        	cartData.setExpirationDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
+        if (cartData.getOrderPlaceDate() == null || cartData.getOrderPlaceDate().isEmpty()) {
+        	cartData.setOrderPlaceDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
         }
 
     }

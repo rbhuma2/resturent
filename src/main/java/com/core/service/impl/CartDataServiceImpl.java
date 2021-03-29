@@ -36,7 +36,7 @@ public class CartDataServiceImpl implements CartDataService{
 	public CartData findCardData(String email) {
 		
 		
-		return cartDataRepository.findByEmail(email);
+		return cartDataRepository.findByEmailAndOrderPlaceDate(email, DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.defaultDateTimestamp()));
 		
 	}
 	
@@ -51,7 +51,7 @@ public class CartDataServiceImpl implements CartDataService{
 			response = new CartDataResponse();
 			response.setIdentifier(cartData.getIdentifier());
 			response.setEmail(cartData.getEmail());
-			response.setExpirationDate(cartData.getExpirationDate());
+			response.setOrderPlaceDate(cartData.getOrderPlaceDate());
 			BigDecimal taxAmount = BigDecimal.valueOf(cartData.getTax()).setScale(2, RoundingMode.HALF_EVEN);
 			response.setTax(taxAmount.doubleValue());
 			BigDecimal totalAmount = BigDecimal.valueOf(cartData.getTotalAmount()).setScale(2, RoundingMode.HALF_EVEN);
@@ -123,7 +123,7 @@ public class CartDataServiceImpl implements CartDataService{
 		
 		if(cartData == null) {
 			cartData = new CartData();
-			cartData.setExpirationDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.defaultDateTimestamp()));
+			cartData.setOrderPlaceDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.defaultDateTimestamp()));
 		}
 		
 		cartData.setEmail(email);
@@ -222,12 +222,18 @@ public class CartDataServiceImpl implements CartDataService{
 	}
 
 	@Override
-	public void saveCardData(String email, CartData  cartData) {
-		CartData existingCartData = findCardData(email);
+	public void saveCardData(String email, String id, CartData  cartData) {
+		/*CartData existingCartData = findCardData(email);
+		if(existingCartData == null ) {
+			throw new DataNotFoundException("no.data.found");
+		}*/
+		
+		CartData existingCartData = cartDataRepository.findById(id).orElse(null);
 		if(existingCartData == null ) {
 			throw new DataNotFoundException("no.data.found");
 		}
-		existingCartData.setExpirationDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
+		existingCartData.setProcessed(cartData.isProcessed());
+		existingCartData.setOrderPlaceDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
 		cartDataRepository.save(existingCartData);
 		
 		
