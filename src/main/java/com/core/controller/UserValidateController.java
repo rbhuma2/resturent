@@ -28,6 +28,7 @@ public class UserValidateController {
     	
     	User userResponse = new User();
     	userResponse.setAdmin(userData.isAdmin());
+    	userResponse.setName(userData.getName());
         
     	EntityModel<User> response = EntityModel.of(userResponse);
         
