@@ -233,6 +233,7 @@ public class CartDataServiceImpl implements CartDataService{
 			throw new DataNotFoundException("no.data.found");
 		}
 		existingCartData.setProcessed(cartData.isProcessed());
+		existingCartData.setTransactionId(cartData.getTransactionId());
 		existingCartData.setOrderPlaceDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
 		cartDataRepository.save(existingCartData);
 		
