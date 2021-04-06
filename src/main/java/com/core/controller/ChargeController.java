@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.core.model.ChargeRequest;
+import com.core.model.ChargeResponse;
 import com.core.service.StripeService;
 import com.core.validator.ChargeValidator;
 import com.stripe.exception.StripeException;
@@ -36,11 +37,14 @@ public class ChargeController {
     }
 	
 	@PostMapping
-	public HttpEntity<EntityModel<Charge>> chargeData(@Valid @RequestBody ChargeRequest chargeRequest) throws StripeException {
+	public HttpEntity<EntityModel<ChargeResponse>> chargeData(@Valid @RequestBody ChargeRequest chargeRequest) throws StripeException {
     	
     	Charge charge = stripeService.charge(chargeRequest);
-		EntityModel<Charge> chargeResponse = EntityModel.of(charge);
-        return new ResponseEntity<>(chargeResponse, HttpStatus.CREATED);
+    	ChargeResponse chargeResponse = new ChargeResponse();
+    	chargeResponse.setTransactionId(charge.getId());;
+    	chargeResponse.setAmount(charge.getAmount().doubleValue());
+		EntityModel<ChargeResponse> response = EntityModel.of(chargeResponse);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
 }
