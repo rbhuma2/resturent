@@ -57,6 +57,7 @@ public class ChargeController {
 		existingCartData.setProcessed(true);
 		existingCartData.setTransactionId(charge.getId());
 		existingCartData.setPaymentDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
+		existingCartData.setOrderPlaceDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
 		cartDataRepository.save(existingCartData);
     	ChargeResponse chargeResponse = new ChargeResponse();
     	chargeResponse.setTransactionId(charge.getId());;
