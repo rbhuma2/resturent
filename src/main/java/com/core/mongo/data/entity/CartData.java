@@ -23,6 +23,7 @@ public class CartData {
     private int totalItems;
     private List<String> itemList;
     private String orderPlaceDate;
+    private String paymentDate;
     private double tax;
     private boolean isProcessed;
     private String transactionId;
@@ -32,7 +33,7 @@ public class CartData {
     public CartData(@JsonProperty("id") String identifier, @JsonProperty("totalAmount") double totalAmount, @JsonProperty("subTotalAmount") double subTotalAmount,
             @JsonProperty("email") String email, @JsonProperty("totalItems") int totalItems, @JsonProperty("itemList") List<String> itemList,
             @JsonProperty("orderPlaceDate") String orderPlaceDate, @JsonProperty("tax") double tax, @JsonProperty("isProcessed") boolean isProcessed,
-            @JsonProperty("transactionId") String transactionId) {
+            @JsonProperty("transactionId") String transactionId, @JsonProperty("paymentDate") String paymentDate) {
         super();
         this.identifier = identifier;
         this.totalAmount = totalAmount;
@@ -44,6 +45,7 @@ public class CartData {
         this.tax = tax;
         this.isProcessed = isProcessed;
         this.transactionId = transactionId;
+        this.paymentDate = paymentDate;
     }
     
     public CartData() {
@@ -129,8 +131,14 @@ public class CartData {
 	public void setTransactionId(String transactionId) {
 		this.transactionId = transactionId;
 	}
-	
-	
-	
 
+	public String getPaymentDate() {
+		return paymentDate;
+	}
+
+	public void setPaymentDate(String paymentDate) {
+		this.paymentDate = paymentDate;
+	}
+	
+	
 }

@@ -124,6 +124,7 @@ public class CartDataServiceImpl implements CartDataService{
 		if(cartData == null) {
 			cartData = new CartData();
 			cartData.setOrderPlaceDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.defaultDateTimestamp()));
+			cartData.setPaymentDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.defaultDateTimestamp()));
 		}
 		
 		cartData.setEmail(email);
@@ -234,7 +235,7 @@ public class CartDataServiceImpl implements CartDataService{
 		}
 		existingCartData.setProcessed(cartData.isProcessed());
 		existingCartData.setTransactionId(cartData.getTransactionId());
-		existingCartData.setOrderPlaceDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
+		existingCartData.setPaymentDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
 		cartDataRepository.save(existingCartData);
 		
 		
