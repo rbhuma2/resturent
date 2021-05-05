@@ -54,7 +54,8 @@ public class ChargeController {
 		Charge charge = stripeService.charge(chargeRequest);
     	
     	
-		existingCartData.setProcessed(true);
+		existingCartData.setProcessed(false);
+		existingCartData.setEmail(chargeRequest.getEmail());
 		existingCartData.setTransactionId(charge.getId());
 		existingCartData.setPaymentDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));
 		existingCartData.setOrderPlaceDate(DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.currentTimestamp()));

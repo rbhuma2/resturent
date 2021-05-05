@@ -111,6 +111,7 @@ public class CartDataServiceImpl implements CartDataService{
 					totalAmount += existingItem.getNetAmount();
 				}
 			}
+			cartData.setTotalItems(cartData.getItemList().size());
 			cartData.setSubTotalAmount(totalAmount);
 			cartData.setTax(cartData.getSubTotalAmount() *0.2);
 			cartData.setTotalAmount(cartData.getSubTotalAmount() + cartData.getTax());

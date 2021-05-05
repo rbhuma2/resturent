@@ -28,6 +28,7 @@ public class CartData {
     private boolean isProcessed;
     private String transactionId;
     
+    
 
     @JsonCreator
     public CartData(@JsonProperty("id") String identifier, @JsonProperty("totalAmount") double totalAmount, @JsonProperty("subTotalAmount") double subTotalAmount,
@@ -46,6 +47,7 @@ public class CartData {
         this.isProcessed = isProcessed;
         this.transactionId = transactionId;
         this.paymentDate = paymentDate;
+       
     }
     
     public CartData() {
@@ -139,6 +141,7 @@ public class CartData {
 	public void setPaymentDate(String paymentDate) {
 		this.paymentDate = paymentDate;
 	}
+
 	
 	
 }

@@ -20,11 +20,14 @@ public class CartDataResponse {
     private String orderPlaceDate;
     private double tax;
     private double subTotal;
+    private String name;
+    private String phoneNumber;
 
     @JsonCreator
     public CartDataResponse(@JsonProperty("id") String identifier, @JsonProperty("totalAmount") double totalAmount,
             @JsonProperty("email") String email, @JsonProperty("totalItems") int totalItems, @JsonProperty("itemList") List<ItemData> itemList,
-            @JsonProperty("orderPlaceDate") String orderPlaceDate, @JsonProperty("tax") double tax, @JsonProperty("subTotal") double subTotal) {
+            @JsonProperty("orderPlaceDate") String orderPlaceDate, @JsonProperty("tax") double tax, @JsonProperty("subTotal") double subTotal, 
+            @JsonProperty("name") String name, @JsonProperty("phoneNumber") String phoneNumber) {
         super();
         this.identifier = identifier;
         this.totalAmount = totalAmount;
@@ -34,6 +37,8 @@ public class CartDataResponse {
         this.orderPlaceDate = orderPlaceDate;
         this.tax = tax;
         this.subTotal = subTotal;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
     }
     
     public CartDataResponse() {
@@ -104,6 +109,20 @@ public class CartDataResponse {
 		this.subTotal = subTotal;
 	}
 	
-	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
+	}
+
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
+	}
 
 }

@@ -11,10 +11,11 @@ public class ChargeRequest {
         EUR, USD;
     }
     private String description;
-    private int amount;
+    private double amount;
     private Currency currency;
     private String stripeEmail;
     private String stripeToken;
+    private String email;
     private String id;
     
     public String getDescription() {
@@ -23,10 +24,10 @@ public class ChargeRequest {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(int amount) {
+	public void setAmount(double amount) {
 		this.amount = amount;
 	}
 	public Currency getCurrency() {
@@ -53,7 +54,12 @@ public class ChargeRequest {
 	public void setId(String id) {
 		this.id = id;
 	}
-    
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
     
 
 }

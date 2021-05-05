@@ -97,6 +97,7 @@ public class MenuItemDataServiceImpl implements MenuItemDataService {
         Pageable pageable = PageRequest.of(page - 1, size, Direction.ASC, "category", "type", "name");
         List<String> type = null;
         List<String> category = null;
+        List<String> item = null;
         if (matchFilterMap.get("type") != null) {
         	type = matchFilterMap.get("type");
         }
@@ -104,7 +105,13 @@ public class MenuItemDataServiceImpl implements MenuItemDataService {
         	category = matchFilterMap.get("category");
         }
         
-        if (type != null && category != null && query != null) { 
+        if (matchFilterMap.get("item") != null) {
+        	item = matchFilterMap.get("item");
+        }
+        
+        if (type != null && category != null && query != null && item != null) { 
+        	itemDataListPage = itemDataRepository.findByNameLikeIgnoreCaseAndTypeInAndCategoryInAndItemIn(query, type, category, item, pageable);
+        }if (type != null && category != null && query != null) { 
         	itemDataListPage = itemDataRepository.findByNameLikeIgnoreCaseAndTypeInAndCategoryIn(query, type, category, pageable);
         }else if(type != null && category != null) {
         	itemDataListPage = itemDataRepository.findByTypeInAndCategoryIn(type, category, pageable);
@@ -112,13 +119,18 @@ public class MenuItemDataServiceImpl implements MenuItemDataService {
         	itemDataListPage = itemDataRepository.findByNameLikeIgnoreCaseAndTypeIn(query, type, pageable);
         }else if(category != null && query != null) {
         	itemDataListPage = itemDataRepository.findByNameLikeIgnoreCaseAndCategoryIn(query, category, pageable);
+        }else if(category != null && item != null) {
+        	itemDataListPage = itemDataRepository.findByItemInAndCategoryIn(item, category, pageable);
         }else if(query != null) {
         	itemDataListPage = itemDataRepository.findByNameLikeIgnoreCase(query, pageable);
         }else if(type != null){
         	itemDataListPage = itemDataRepository.findByTypeIn(type, pageable);
         }else if(category != null) {
         	itemDataListPage = itemDataRepository.findByCategoryIn(category, pageable);
-        }else {
+        }if(item != null) {
+        	itemDataListPage = itemDataRepository.findByItemIn(item, pageable);
+        }
+        else {
         	itemDataListPage = itemDataRepository.findAll(pageable);
         }
         

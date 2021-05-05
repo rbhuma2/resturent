@@ -49,12 +49,15 @@ public class UserController {
     	List<String> emailList = httpHeaders.getValuesAsList("X-User-Id");
     	
     	User savedUserData = userService.saveUserData(user, emailList);
+    	User responseUser = new User();
+    	responseUser.setEmail(savedUserData.getEmail());
+    	responseUser.setAdmin(savedUserData.isAdmin());
 
-        EntityModel<User> userResponse = EntityModel.of(new User());
-        userResponse.add(
-                linkTo(methodOn(UserController.class).findUser(savedUserData.getIdentifier())).withRel("user").expand());
+        EntityModel<User> userResponse = EntityModel.of(responseUser);
+        //userResponse.add(
+        //        linkTo(methodOn(UserController.class).findUser(savedUserData.getIdentifier())).withRel("user").expand());
         
-        return new ResponseEntity<>(userResponse, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(userResponse, HttpStatus.CREATED);
     }
     
     @GetMapping(value = "/{id}")

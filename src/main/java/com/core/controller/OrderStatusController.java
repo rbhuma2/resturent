@@ -31,7 +31,7 @@ public class OrderStatusController {
 	
 	
 	private static final int INITIAL_PAGE = 1;
-    private static final int INITIAL_PAGE_SIZE = 10;
+    private static final int INITIAL_PAGE_SIZE = 1000;
     
 	@Autowired
 	private OrderStatusService orderStatusService;

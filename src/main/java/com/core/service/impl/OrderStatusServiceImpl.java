@@ -21,7 +21,6 @@ import com.core.mongo.data.repository.CartDataRepository;
 import com.core.mongo.data.repository.UserRepository;
 import com.core.service.ItemDataService;
 import com.core.service.OrderStatusService;
-import com.core.utils.DateRoutine;
 import com.core.utils.PageNavigation;
 
 @Service
@@ -41,15 +40,14 @@ public class OrderStatusServiceImpl implements OrderStatusService{
 		
 		List<CartDataResponse> cartDataResponseList = new ArrayList<>();
 		Page<CartData> cartDataListPage = null;
-		Pageable pageable = PageRequest.of(page - 1, size, Direction.DESC, "orderPlaceDate");
+		Pageable pageable = PageRequest.of(page - 1, size, Direction.ASC, "orderPlaceDate");
 		
 		User user = userRepository.findByEmail(email);
 		
 		if(user != null && !user.isAdmin()) {
 			return cartDataResponseList;
 		}
-		cartDataListPage = cartDataRepository.findByOrderPlaceDateNotAndIsProcessed(
-				DateRoutine.dateTimeAsYYYYMMDDHHhhmmssSSSString(DateRoutine.defaultDateTimestamp()), false, pageable);
+		cartDataListPage = cartDataRepository.findByIsProcessed(false, pageable);
 		
 		if (cartDataListPage != null && cartDataListPage.getTotalElements() != 0) {
             for (CartData cartData : cartDataListPage) {
@@ -58,6 +56,11 @@ public class OrderStatusServiceImpl implements OrderStatusService{
             	response.setTotalItems(cartData.getTotalItems());
             	response.setTotalAmount(cartData.getTotalAmount());
             	response.setOrderPlaceDate(cartData.getOrderPlaceDate());
+            	User user1 = userRepository.findByEmail(cartData.getEmail());
+            	if(user1 != null) {
+            		response.setName(user1.getName());
+            		response.setPhoneNumber(user1.getPhoneNumber());
+            	}
             	cartDataResponseList.add(response);
             }
         } else {

@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService{
 			if(emailList.get(0).equalsIgnoreCase(email)) {
 				user.setAdmin(true);
 			}else {
-				User adminUser = userRepository.findByEmail(user.getEmail());
+				User adminUser = userRepository.findByEmail(emailList.get(0));
 				if(adminUser != null && adminUser.isAdmin()) {
 					user.setAdmin(true);
 				}

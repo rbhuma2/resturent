@@ -10,7 +10,7 @@ public interface CartDataRepository extends MongoRepository<CartData, String> {
 
 	CartData findByEmailAndOrderPlaceDate(String email, String orderPlaceDate);
 	
-	Page<CartData> findByOrderPlaceDateNotAndIsProcessed(String orderPlaceDate, boolean isProcessed, Pageable pageable);
+	Page<CartData> findByIsProcessed(boolean isProcessed, Pageable pageable);
 
     
 }

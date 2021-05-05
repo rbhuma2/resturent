@@ -28,7 +28,7 @@ public class StripeServiceImpl implements StripeService{
     
     public Charge charge(ChargeRequest chargeRequest) throws StripeException {
         Map<String, Object> chargeParams = new HashMap<>();
-        chargeParams.put("amount", chargeRequest.getAmount() * 100);
+        chargeParams.put("amount", (int) Math.round(chargeRequest.getAmount() * 100));
         chargeParams.put("currency", chargeRequest.getCurrency());
         chargeParams.put("source", chargeRequest.getStripeToken());
         return Charge.create(chargeParams);
