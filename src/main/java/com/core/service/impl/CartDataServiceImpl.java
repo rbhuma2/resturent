@@ -53,11 +53,11 @@ public class CartDataServiceImpl implements CartDataService{
 			response.setEmail(cartData.getEmail());
 			response.setOrderPlaceDate(cartData.getOrderPlaceDate());
 			BigDecimal taxAmount = BigDecimal.valueOf(cartData.getTax()).setScale(2, RoundingMode.HALF_EVEN);
-			response.setTax(taxAmount.doubleValue());
+			//response.setTax(taxAmount.doubleValue());
 			BigDecimal totalAmount = BigDecimal.valueOf(cartData.getTotalAmount()).setScale(2, RoundingMode.HALF_EVEN);
 			response.setTotalAmount(totalAmount.doubleValue());
 			BigDecimal subTotal = BigDecimal.valueOf(cartData.getSubTotalAmount()).setScale(2, RoundingMode.HALF_EVEN);
-			response.setSubTotal(subTotal.doubleValue());
+			//response.setSubTotal(subTotal.doubleValue());
 			response.setTotalItems(cartData.getTotalItems());
 			if(cartData.getItemList() !=null && !cartData.getItemList().isEmpty()) {
 				response.setItemList(new ArrayList<>());
@@ -114,7 +114,7 @@ public class CartDataServiceImpl implements CartDataService{
 			cartData.setTotalItems(cartData.getItemList().size());
 			cartData.setSubTotalAmount(totalAmount);
 			cartData.setTax(cartData.getSubTotalAmount() *0.2);
-			cartData.setTotalAmount(cartData.getSubTotalAmount() + cartData.getTax());
+			cartData.setTotalAmount(cartData.getSubTotalAmount());
 			cartDataRepository.save(cartData);
 		}
 		            
@@ -146,7 +146,7 @@ public class CartDataServiceImpl implements CartDataService{
 		}
 		cartData.setSubTotalAmount(totalAmount);
 		cartData.setTax(cartData.getSubTotalAmount() *0.2);
-		cartData.setTotalAmount(cartData.getSubTotalAmount() + cartData.getTax());
+		cartData.setTotalAmount(cartData.getSubTotalAmount());
 		return cartData;
 	}
 

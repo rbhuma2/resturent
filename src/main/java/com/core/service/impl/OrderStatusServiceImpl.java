@@ -90,11 +90,11 @@ public class OrderStatusServiceImpl implements OrderStatusService{
 			response.setEmail(cartData.getEmail());
 			response.setOrderPlaceDate(cartData.getOrderPlaceDate());
 			BigDecimal taxAmount = BigDecimal.valueOf(cartData.getTax()).setScale(2, RoundingMode.HALF_EVEN);
-			response.setTax(taxAmount.doubleValue());
+			//response.setTax(taxAmount.doubleValue());
 			BigDecimal totalAmount = BigDecimal.valueOf(cartData.getTotalAmount()).setScale(2, RoundingMode.HALF_EVEN);
 			response.setTotalAmount(totalAmount.doubleValue());
 			BigDecimal subTotal = BigDecimal.valueOf(cartData.getSubTotalAmount()).setScale(2, RoundingMode.HALF_EVEN);
-			response.setSubTotal(subTotal.doubleValue());
+			//response.setSubTotal(subTotal.doubleValue());
 			response.setTotalItems(cartData.getTotalItems());
 			if(cartData.getItemList() !=null && !cartData.getItemList().isEmpty()) {
 				response.setItemList(new ArrayList<>());

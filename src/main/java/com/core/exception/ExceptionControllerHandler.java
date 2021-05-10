@@ -26,7 +26,6 @@ import com.core.exception.model.Error;
 import com.core.exception.model.Errors;
 import com.core.exception.model.ValidationErrorDTO;
 
-@Transactional(rollbackFor = Exception.class)
 @ControllerAdvice
 public class ExceptionControllerHandler extends ResponseEntityExceptionHandler {
 
